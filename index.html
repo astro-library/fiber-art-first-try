@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BPL Fiber Mascot Contest — Catalogue</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: #1F3A5F;
+    --ink-dim: #4A5D7A;
+    --linen: #F2EDE4;
+    --paper: #FAF7F0;
+    --mustard: #C99A2E;
+    --thread: #B7472A;
+    --fern: #3F6C51;
+    --card-shadow: 0 1px 0 rgba(31,58,95,0.08);
+    --line: rgba(31,58,95,0.16);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--linen);
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(31,58,95,0.06) 1px, transparent 0);
+    background-size: 22px 22px;
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+  }
+  a{color:inherit;}
+
+  /* HEADER */
+  header{
+    padding: 40px 24px 28px;
+    text-align:center;
+    border-bottom: 2px solid var(--ink);
+    background: var(--paper);
+    position:relative;
+  }
+  header .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--thread);
+    margin-bottom:10px;
+  }
+  header h1{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-size:clamp(28px, 5vw, 46px);
+    margin:0 0 8px;
+    letter-spacing:-0.01em;
+  }
+  header p.sub{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:16px;
+    color:var(--ink-dim);
+    margin:0 0 18px;
+  }
+  header .credit{
+    font-size:12.5px;
+    color:var(--ink-dim);
+    max-width:520px;
+    margin:0 auto;
+  }
+
+  /* CONTROLS */
+  .controls{
+    max-width:1100px;
+    margin:28px auto 6px;
+    padding:0 24px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .filters{display:flex; gap:8px; flex-wrap:wrap;}
+  .pill{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.03em;
+    padding:8px 14px;
+    border:1.5px solid var(--ink);
+    border-radius:100px;
+    background:var(--paper);
+    cursor:pointer;
+    transition: all .15s ease;
+    user-select:none;
+  }
+  .pill:hover{ background: var(--linen); }
+  .pill.active{ background:var(--ink); color:var(--paper); }
+  .count{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--ink-dim);
+  }
+
+  /* GRID */
+  .grid{
+    max-width:1100px;
+    margin:22px auto 10px;
+    padding: 0 24px;
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap:20px;
+  }
+  .card{
+    background:var(--paper);
+    border:1.5px solid var(--ink);
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    box-shadow: var(--card-shadow);
+    transition: transform .15s ease, box-shadow .15s ease;
+    position:relative;
+    overflow:hidden;
+  }
+  .card:hover{
+    transform: translateY(-3px);
+    box-shadow: 3px 5px 0 rgba(31,58,95,0.18);
+  }
+  .card .thumb{
+    aspect-ratio: 1 / 1;
+    width:100%;
+    object-fit:cover;
+    border-bottom:1.5px solid var(--ink);
+    display:block;
+    background:#e4ddcd;
+  }
+  .card .stub{
+    padding:10px 12px 12px;
+    position:relative;
+  }
+  .card .catno{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--ink-dim);
+    letter-spacing:0.05em;
+  }
+  .card .name{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:16px;
+    margin-top:2px;
+    line-height:1.2;
+  }
+  .card .badge{
+    position:absolute;
+    top:-1px; right:-1px;
+    background:var(--fern);
+    color:var(--paper);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10px;
+    letter-spacing:0.06em;
+    padding:4px 8px 4px 10px;
+    border-bottom-left-radius:6px;
+  }
+  .perf{
+    position:absolute; left:0; right:0; top:0; height:0;
+  }
+
+  /* PAGINATION */
+  .pager{
+    max-width:1100px;
+    margin: 26px auto 60px;
+    padding: 0 24px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+  }
+  .pager button{
+    font-family:'IBM Plex Mono', monospace;
+    background:var(--paper);
+    border:1.5px solid var(--ink);
+    padding:8px 14px;
+    cursor:pointer;
+    font-size:13px;
+  }
+  .pager button:disabled{ opacity:0.35; cursor:default; }
+  .pager button:not(:disabled):hover{ background:var(--ink); color:var(--paper); }
+
+  /* DETAIL OVERLAY */
+  .overlay{
+    position:fixed; inset:0;
+    background:rgba(31,58,95,0.42);
+    display:none;
+    align-items:flex-start;
+    justify-content:center;
+    padding: 32px 16px;
+    overflow-y:auto;
+    z-index:50;
+  }
+  .overlay.open{ display:flex; }
+  .detail{
+    background:var(--paper);
+    max-width:760px;
+    width:100%;
+    border:2px solid var(--ink);
+    box-shadow: 6px 8px 0 rgba(31,58,95,0.25);
+    position:relative;
+  }
+  .detail .close{
+    position:absolute; top:12px; right:14px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    background:none; border:none; cursor:pointer;
+    color:var(--ink);
+  }
+  .detail .dhead{
+    padding: 22px 26px 14px;
+    border-bottom:1.5px solid var(--line);
+  }
+  .detail .catno{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--thread);
+    letter-spacing:0.08em;
+  }
+  .detail h2{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-size:28px;
+    margin:6px 0 4px;
+  }
+  .detail .creator{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    color:var(--ink-dim);
+    font-size:15px;
+  }
+  .tags{ display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
+  .tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    border:1px solid var(--ink);
+    padding:3px 9px;
+    border-radius:100px;
+  }
+  .tag.youth{ background:var(--fern); color:var(--paper); border-color:var(--fern); }
+
+  .dbody{ padding: 20px 26px 26px; }
+  .photos{
+    display:flex; gap:10px; overflow-x:auto; padding-bottom:6px; margin-bottom:18px;
+  }
+  .photos img{
+    width:150px; height:150px; object-fit:cover; border:1.5px solid var(--ink); flex-shrink:0;
+    background:#e4ddcd;
+  }
+  .desc{ font-size:15px; line-height:1.6; }
+  .desc p{ margin:0 0 12px; }
+  .stampline{
+    margin-top:20px; padding-top:14px; border-top:1px dashed var(--line);
+    font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--ink-dim);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px;
+  }
+
+  footer{
+    text-align:center; padding: 20px 24px 46px;
+    font-size:12px; color:var(--ink-dim);
+  }
+
+  @media (max-width:520px){
+    .grid{ grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); gap:14px; }
+    .detail h2{ font-size:22px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Berkeley Public Library</div>
+  <h1>The Fiber Mascot Contest</h1>
+  <p class="sub">100+ handmade entries. One future BPL social mascot.</p>
+  <p class="credit">This contest is made possible thanks to the support of the Berkeley Public Library Foundation.</p>
+</header>
+
+<div class="controls">
+  <div class="filters" id="filters"></div>
+  <div class="count" id="count"></div>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<div class="pager">
+  <button id="prevBtn">← Prev</button>
+  <span id="pageLabel"></span>
+  <button id="nextBtn">Next →</button>
+</div>
+
+<footer>Sample prototype data shown below — swap in real entries and photos before launch.</footer>
+
+<div class="overlay" id="overlay">
+  <div class="detail" id="detailCard"></div>
+</div>
+
+<script>
+/* ---------- SAMPLE DATA ----------
+   Replace this array with your real 100+ entries.
+   Each photo can be any image URL (or a local /images/### .jpg path once hosted).
+*/
+const ENTRIES = [
+  {num:"001", name:"Story the Sprout", creator:"Courtney R.", youth:false,
+   categories:["Most Creative"],
+   photos:["https://picsum.photos/seed/sprout1/500/500","https://picsum.photos/seed/sprout2/500/500","https://picsum.photos/seed/sprout3/500/500"],
+   desc:"A felted seedling character with tiny embroidered leaves, meant to represent new stories sprouting every time someone opens a book. Stuffed with reclaimed wool batting from a retired sweater."},
+  {num:"002", name:"Bindings the Pigeon", creator:"Emma T. (BPL Staff)", youth:false,
+   categories:["Most Berkeley"],
+   photos:["https://picsum.photos/seed/pigeon1/500/500","https://picsum.photos/seed/pigeon2/500/500"],
+   desc:"A crocheted pigeon in muted grays, inspired by the regulars who perch outside the Central branch. Wears a tiny knitted library card on a string."},
+  {num:"003", name:"Marigold", creator:"Priya S., age 9", youth:true,
+   categories:["Best Youth Submission"],
+   photos:["https://picsum.photos/seed/marigold1/500/500","https://picsum.photos/seed/marigold2/500/500"],
+   desc:"A sunflower-headed creature made from felt and pom poms, holding a tiny cross-stitched sign that says 'Read Outside.' Made during a Saturday library craft hour."},
+  {num:"004", name:"Compost Carl", creator:"Devon M.", youth:false,
+   categories:["Most Berkeley","Most Creative"],
+   photos:["https://picsum.photos/seed/carl1/500/500","https://picsum.photos/seed/carl2/500/500","https://picsum.photos/seed/carl3/500/500"],
+   desc:"A worm made of upcycled brown and green yarn scraps, referencing the city's composting program. Every segment is a different donated yarn remnant."},
+  {num:"005", name:"Little Ferry", creator:"Wren K., age 12", youth:true,
+   categories:["Best Youth Submission","Most Creative"],
+   photos:["https://picsum.photos/seed/ferry1/500/500","https://picsum.photos/seed/ferry2/500/500"],
+   desc:"A needle-felted otter riding a matchbox-sized ferry, a nod to the Bay. Whiskers made from embroidery floss, hand-sewn life vest included."},
+  {num:"006", name:"Oat Milk Otto", creator:"Sam L.", youth:false,
+   categories:["Most Berkeley"],
+   photos:["https://picsum.photos/seed/otto1/500/500","https://picsum.photos/seed/otto2/500/500"],
+   desc:"A crocheted oat milk carton with a small smiling face, carrying an even tinier crocheted book. Fully stuffed, fully caffeinated in spirit."},
+  {num:"007", name:"Dewey", creator:"Alina F.", youth:false,
+   categories:["Most Creative"],
+   photos:["https://picsum.photos/seed/dewey1/500/500","https://picsum.photos/seed/dewey2/500/500","https://picsum.photos/seed/dewey3/500/500"],
+   desc:"A owl made entirely from repurposed denim scraps, quilted feather by feather. Named for an obvious reason."},
+  {num:"008", name:"Fernie", creator:"Miles O., age 7", youth:true,
+   categories:["Best Youth Submission"],
+   photos:["https://picsum.photos/seed/fernie1/500/500"],
+   desc:"A soft green dragon made with help from a grown-up, covered in fern-shaped felt patches cut freehand."},
+  {num:"009", name:"Sourdough Steve", creator:"Katrina B.", youth:false,
+   categories:["Most Berkeley","Most Creative"],
+   photos:["https://picsum.photos/seed/steve1/500/500","https://picsum.photos/seed/steve2/500/500"],
+   desc:"A crusty loaf character with a knit crackle texture and a tiny embroidered starter jar sidekick. Smells like nothing, unfortunately."},
+  {num:"010", name:"", creator:"Noor A.", youth:false,
+   categories:["Most Creative"],
+   photos:["https://picsum.photos/seed/fog1/500/500","https://picsum.photos/seed/fog2/500/500"],
+   desc:"A wisp-shaped creature made from unspun roving and tulle, meant to drift across a shelf like the marine layer rolling into the hills."},
+  {num:"011", name:"Cargo the Bike Cat", creator:"Theo P., age 14", youth:true,
+   categories:["Best Youth Submission","Most Berkeley"],
+   photos:["https://picsum.photos/seed/cargo1/500/500","https://picsum.photos/seed/cargo2/500/500"],
+   desc:"A cat riding a hand-built mini cargo bike frame wrapped in yarn, complete with a basket for library holds."},
+  {num:"012", name:"Parking Spot Pete", creator:"Renata G.", youth:false,
+   categories:["Most Berkeley"],
+   photos:["https://picsum.photos/seed/pete1/500/500"],
+   desc:"A weary-looking gray blob character sitting on a felt parking space, holding a permit. A crowd favorite for reasons every Berkeley driver understands."},
+  {num:"013", name:"Thistle", creator:"Bea H., age 10", youth:true,
+   categories:["Best Youth Submission"],
+   photos:["https://picsum.photos/seed/thistle1/500/500","https://picsum.photos/seed/thistle2/500/500"],
+   desc:"A purple thistle sprite with hand-sewn spiky petals, made from leftover fabric from a family quilting project."},
+  {num:"014", name:"Farmers Market Fox", creator:"Jules V.", youth:false,
+   categories:["Most Berkeley","Most Creative"],
+   photos:["https://picsum.photos/seed/fox1/500/500","https://picsum.photos/seed/fox2/500/500","https://picsum.photos/seed/fox3/500/500"],
+   desc:"A fox carrying a tiny woven basket of felt vegetables, tail striped like a produce tote. Every vegetable is individually stitched."},
+];
+
+const CATS = ["All", "Youth Submission"];
+const PER_PAGE = 8;
+let activeFilter = "All";
+let page = 1;
+
+function filtered(){
+  if(activeFilter === "All") return ENTRIES;
+  return ENTRIES.filter(e => e.youth);
+}
+
+function renderFilters(){
+  const el = document.getElementById('filters');
+  el.innerHTML = CATS.map(c =>
+    `<button class="pill ${c===activeFilter?'active':''}" data-cat="${c}">${c}</button>`
+  ).join('');
+  el.querySelectorAll('.pill').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      activeFilter = btn.dataset.cat;
+      page = 1;
+      renderAll();
+    });
+  });
+}
+
+function renderGrid(){
+  const list = filtered();
+  const totalPages = Math.max(1, Math.ceil(list.length / PER_PAGE));
+  if(page > totalPages) page = totalPages;
+  const start = (page-1)*PER_PAGE;
+  const pageItems = list.slice(start, start+PER_PAGE);
+
+  document.getElementById('count').textContent = `${list.length} ${list.length===1?'entry':'entries'}`;
+  document.getElementById('grid').innerHTML = pageItems.map(e => `
+    <div class="card" data-num="${e.num}">
+      ${e.youth ? '<div class="badge">Youth</div>' : ''}
+      <img class="thumb" src="${e.photos[0]}" alt="Contestant ${e.num}">
+      <div class="stub">
+        <div class="catno">Contestant ${e.num}</div>
+      </div>
+    </div>
+  `).join('');
+
+  document.querySelectorAll('.card').forEach(card=>{
+    card.addEventListener('click', ()=> openDetail(card.dataset.num));
+  });
+
+  document.getElementById('pageLabel').textContent = `Page ${page} of ${totalPages}`;
+  document.getElementById('prevBtn').disabled = page<=1;
+  document.getElementById('nextBtn').disabled = page>=totalPages;
+}
+
+function openDetail(num){
+  const e = ENTRIES.find(x=>x.num===num);
+  if(!e) return;
+  document.getElementById('detailCard').innerHTML = `
+    <button class="close" id="closeBtn">✕ Close</button>
+    <div class="dhead">
+      <div class="catno">Contestant ${e.num}</div>
+      <h2>${e.name && e.name.trim() ? e.name : 'Contestant ' + e.num}</h2>
+      <div class="creator">Made by ${e.creator}</div>
+      <div class="tags">
+        ${e.youth ? '<span class="tag youth">Youth Entry</span>' : ''}
+      </div>
+    </div>
+    <div class="dbody">
+      <div class="photos">
+        ${e.photos.map(p=>`<img src="${p}" alt="${e.name}">`).join('')}
+      </div>
+      <div class="desc"><p>${e.desc}</p></div>
+      <div class="stampline">
+        <span>Catalogued for the BPL Fiber Mascot Contest</span>
+        <span>Foundation-supported entry</span>
+      </div>
+    </div>
+  `;
+  document.getElementById('overlay').classList.add('open');
+  document.getElementById('closeBtn').addEventListener('click', closeDetail);
+}
+function closeDetail(){ document.getElementById('overlay').classList.remove('open'); }
+document.getElementById('overlay').addEventListener('click', (ev)=>{
+  if(ev.target.id === 'overlay') closeDetail();
+});
+
+document.getElementById('prevBtn').addEventListener('click', ()=>{ page--; renderGrid(); window.scrollTo({top:0,behavior:'smooth'}); });
+document.getElementById('nextBtn').addEventListener('click', ()=>{ page++; renderGrid(); window.scrollTo({top:0,behavior:'smooth'}); });
+
+function renderAll(){ renderFilters(); renderGrid(); }
+renderAll();
+</script>
+
+</body>
+</html>
